@@ -14,3 +14,6 @@ def createDataSet():
     lables = ['A','A','B','B']
     return group,lables
 
+
+def classify0(inX, dataSet, labels, k):
+    dataSetSize = dataSet.shape(0)
