@@ -1,5 +1,5 @@
 '''
-Started on Sep 04.2018
+Started on Dec 04.2018
 KNN   K-Nearest Neighbour
 @author:Azure1yu
 1st year learning Python and ML ^^
@@ -17,3 +17,6 @@ def createDataSet():
 
 def classify0(inX, dataSet, labels, k):
     dataSetSize = dataSet.shape(0)
+    diffMat = tile(inX, (dataSetSize,1)) - dataSet
+    sqDiffMat = diffMat**2
+    sqDistances = sqDiffMat.sum(axis=1)
