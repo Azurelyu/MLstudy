@@ -16,7 +16,7 @@ def createDataSet():
 
 
 def classify0(inX, dataSet, labels, k):
-    dataSetSize = dataSet.shape(0)
+    dataSetSize = dataSet.shape[0]
     diffMat = tile(inX, (dataSetSize,1)) - dataSet
     sqDiffMat = diffMat**2
     sqDistances = sqDiffMat.sum(axis=1)
@@ -26,5 +26,22 @@ def classify0(inX, dataSet, labels, k):
     for i in range (k):
         voteIlabel = labels[sortedDistIndicies[i]]
         classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
-    sortedClassCount = sorted(classCount.items(), key = operator.itemgetter(1),reverse=True)
-    return sortedClassCount [0] [0]
+    sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
+    return sortedClassCount[0][0]
+
+
+def file2matrix(filename):
+    fr = open(filename)
+    arrayOLines = fr.readlines()
+    numberOfLines = len(arrayOLines)     #得到的文件行数
+    returnMat = zeros((numberOfLines,3))   #创建返回的numpy矩阵
+    classLabelVector = []
+    index = 0
+    for line in arrayOLines:
+        line = line.strip()
+        listFromLine = line.split('\t')
+        returnMat[index, :] = listFromLine[0:3]
+        classLabelVector.append(int(listFromLine[-1]))
+        index += 1                          #解析文件数据到列表
+    return returnMat, classLabelVector
+
