@@ -45,3 +45,21 @@ def file2matrix(filename):
         index += 1                          #解析文件数据到列表
     return returnMat, classLabelVector
 
+def autoNorm(dataSet):
+    minVals = dataSet.min(0)
+    maxVals = dataSet.max(0)
+    ranges = maxVals - minVals
+    normDataSet =zeros(shape(dataSet))
+    m = dataSet.shape[0]
+    normDataSet = dataSet - tile(minVals, (m, 1))
+    normDataSet = normDataSet/tile(ranges, (m, 1))
+    return normDataSet, ranges, minVals
+
+
+def datingClassTest():
+    hoRatio = 0.10
+    datingDataMat, datingLabels = file2matrix('datingTestSet.txt')
+    normMat, ranges, minVals = autoNorm(datingDataMat)
+    m = normMat.shape[0]
+    numTestVecs = int(m*hoRatio)
+    errorCount = 0.0
